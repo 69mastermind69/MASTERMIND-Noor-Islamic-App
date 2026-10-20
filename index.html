@@ -1,0 +1,800 @@
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#075b46">
+  <meta name="description" content="Noor — একটি অফলাইন ইসলামিক জীবনযাপন সহায়ক অ্যাপ।">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <title>Noor | Developer MASTERMIND</title>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Background decoration -->
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+
+  <!-- =========================
+       PIN LOCK SCREEN
+  ========================== -->
+  <main id="pinScreen" class="pin-screen">
+    <section class="pin-card">
+      <div class="brand-mark" aria-hidden="true">☾</div>
+
+      <p class="brand-kicker">YOUR DAILY ISLAMIC COMPANION</p>
+      <h1 class="brand-title">নূর <span>Noor</span></h1>
+      <p class="brand-subtitle">
+        ইবাদত, ভালো কাজ ও আত্মশুদ্ধির প্রতিদিনের সঙ্গী
+      </p>
+
+      <!-- First time PIN setup -->
+      <section id="pinSetup" class="pin-panel">
+        <h2>নিজের PIN তৈরি করো</h2>
+        <p>প্রথমবার ব্যবহারের জন্য একটি ৪–৮ সংখ্যার PIN সেট করো।</p>
+
+        <form id="pinSetupForm">
+          <label for="setupPinInput">নতুন PIN</label>
+          <input
+            id="setupPinInput"
+            name="pin"
+            type="password"
+            inputmode="numeric"
+            autocomplete="new-password"
+            minlength="4"
+            maxlength="8"
+            pattern="[0-9]{4,8}"
+            placeholder="••••"
+            required
+          >
+
+          <label for="confirmPinInput">PIN আবার লেখো</label>
+          <input
+            id="confirmPinInput"
+            name="confirmPin"
+            type="password"
+            inputmode="numeric"
+            autocomplete="new-password"
+            minlength="4"
+            maxlength="8"
+            pattern="[0-9]{4,8}"
+            placeholder="••••"
+            required
+          >
+
+          <button id="savePinBtn" class="btn btn-primary" type="submit">
+            PIN সেট করো <span aria-hidden="true">→</span>
+          </button>
+        </form>
+
+        <p id="pinSetupMessage" class="form-message" role="status"></p>
+      </section>
+
+      <!-- Returning user login -->
+      <section id="pinLogin" class="pin-panel" hidden>
+        <h2>আবার স্বাগতম!</h2>
+        <p>তোমার অ্যাপ খুলতে PIN দাও।</p>
+
+        <form id="pinLoginForm">
+          <label for="loginPinInput">তোমার PIN</label>
+          <input
+            id="loginPinInput"
+            name="loginPin"
+            type="password"
+            inputmode="numeric"
+            autocomplete="current-password"
+            maxlength="8"
+            pattern="[0-9]{4,8}"
+            placeholder="••••"
+            required
+          >
+
+          <button id="unlockBtn" class="btn btn-primary" type="submit">
+            অ্যাপ খোলো <span aria-hidden="true">↗</span>
+          </button>
+        </form>
+
+        <p id="pinLoginMessage" class="form-message" role="alert"></p>
+      </section>
+
+      <div class="security-note">
+        <span aria-hidden="true">🔒</span>
+        <span>তোমার ব্যক্তিগত দৈনিক রুটিনের জন্য PIN লক</span>
+      </div>
+
+      <footer class="developer-credit">
+        DEVELOPED WITH CARE BY
+        <strong>Developer MASTERMIND</strong>
+      </footer>
+    </section>
+  </main>
+
+  <!-- =========================
+       MAIN APP
+       PIN verification success হলে
+       JavaScript এই অংশটি দেখাবে।
+  ========================== -->
+  <div id="appShell" class="app-shell" hidden>
+
+    <!-- Header -->
+    <header class="app-header">
+      <a href="#home" class="header-brand" data-nav="home" aria-label="হোম">
+        <span class="header-moon" aria-hidden="true">☾</span>
+        <span>
+          <strong>Noor</strong>
+          <small>ইমান • ইবাদত • উন্নতি</small>
+        </span>
+      </a>
+
+      <div class="header-actions">
+        <span id="offlineStatus" class="status-chip">
+          <span class="status-dot"></span>
+          Offline Ready
+        </span>
+
+        <button
+          id="lockAppBtn"
+          class="icon-btn"
+          type="button"
+          aria-label="অ্যাপ লক করো"
+          title="অ্যাপ লক করো"
+        >🔒</button>
+      </div>
+    </header>
+
+    <!-- Main navigation -->
+    <nav class="main-nav" aria-label="প্রধান মেনু">
+      <button class="nav-item active" data-nav="home" type="button">
+        <span aria-hidden="true">⌂</span><span>হোম</span>
+      </button>
+
+      <button class="nav-item" data-nav="prayer" type="button">
+        <span aria-hidden="true">☪</span><span>নামাজ</span>
+      </button>
+
+      <button class="nav-item" data-nav="calendar" type="button">
+        <span aria-hidden="true">▦</span><span>ক্যালেন্ডার</span>
+      </button>
+
+      <button class="nav-item" data-nav="notebook" type="button">
+        <span aria-hidden="true">✎</span><span>নোটবুক</span>
+      </button>
+
+      <button class="nav-item" data-nav="ibadah" type="button">
+        <span aria-hidden="true">✿</span><span>ইবাদত</span>
+      </button>
+
+      <button class="nav-item" data-nav="world" type="button">
+        <span aria-hidden="true">◷</span><span>বিশ্বঘড়ি</span>
+      </button>
+
+      <button class="nav-item" data-nav="qibla" type="button">
+        <span aria-hidden="true">◎</span><span>কিবলা</span>
+      </button>
+
+      <button class="nav-item" data-nav="settings" type="button">
+        <span aria-hidden="true">⚙</span><span>সেটিংস</span>
+      </button>
+    </nav>
+
+    <!-- =========================
+         HOME
+    ========================== -->
+    <main class="page-container">
+
+      <section id="view-home" class="app-view">
+        <div class="welcome-row">
+          <div>
+            <p class="eyebrow">আসসালামু আলাইকুম 🌙</p>
+            <h1>আজকের দিনটি হোক বরকতময়</h1>
+            <p id="weekdayLabel" class="muted-text">তোমার প্রতিদিনের ভালো কাজ শুরু হোক।</p>
+          </div>
+
+          <div class="avatar-mark" aria-hidden="true">✦</div>
+        </div>
+
+        <!-- Date card -->
+        <article class="date-card">
+          <div class="date-card-decoration" aria-hidden="true">☾ ✧</div>
+
+          <p class="eyebrow light-text">আজকের ইসলামিক তারিখ</p>
+          <h2 id="hijriDate">হিজরি তারিখ লোড হচ্ছে…</h2>
+          <p id="gregorianDate">ইংরেজি তারিখ লোড হচ্ছে…</p>
+
+          <p class="date-note">
+            স্থানীয় চাঁদ দেখা অনুযায়ী হিজরি তারিখ এক দিন ভিন্ন হতে পারে।
+          </p>
+        </article>
+
+        <!-- Next prayer -->
+        <article class="next-prayer-card">
+          <div>
+            <p class="eyebrow">পরবর্তী নামাজ</p>
+            <h2 id="nextPrayerName">নামাজের সময় হিসাব হচ্ছে…</h2>
+            <p id="nextPrayerTime">--:--</p>
+            <p id="prayerCountdown" class="muted-text">সময় লোড হচ্ছে…</p>
+          </div>
+          <div class="prayer-moon-art" aria-hidden="true">☪</div>
+        </article>
+
+        <!-- Daily progress -->
+        <section class="section-block">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">YOUR DAILY JOURNEY</p>
+              <h2>আজকের অগ্রগতি</h2>
+            </div>
+            <span id="dailyProgressText" class="progress-number">০%</span>
+          </div>
+
+          <div
+            class="progress-track"
+            role="progressbar"
+            aria-label="আজকের নামাজের অগ্রগতি"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+            id="dailyProgressBar"
+          >
+            <div id="dailyProgressFill" class="progress-fill"></div>
+          </div>
+
+          <p class="muted-text">
+            ছোট ছোট ভালো অভ্যাস, প্রতিদিন একটু করে উন্নতি।
+          </p>
+        </section>
+
+        <!-- Prayer checklist -->
+        <section class="section-block">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">FIVE DAILY PRAYERS</p>
+              <h2>আজকের পাঁচ ওয়াক্ত নামাজ</h2>
+            </div>
+            <a href="#prayer" data-nav="prayer" class="text-link">সময় দেখো →</a>
+          </div>
+
+          <div class="prayer-checklist">
+            <label class="prayer-check-row" for="check-fajr">
+              <span class="prayer-icon">🌅</span>
+              <span class="prayer-check-copy">
+                <strong>ফজর</strong>
+                <small id="home-time-fajr">সময় হিসাব হবে</small>
+              </span>
+              <input id="check-fajr" type="checkbox" data-prayer="fajr">
+            </label>
+
+            <label class="prayer-check-row" for="check-dhuhr">
+              <span class="prayer-icon">☀️</span>
+              <span class="prayer-check-copy">
+                <strong>জোহর</strong>
+                <small id="home-time-dhuhr">সময় হিসাব হবে</small>
+              </span>
+              <input id="check-dhuhr" type="checkbox" data-prayer="dhuhr">
+            </label>
+
+            <label class="prayer-check-row" for="check-asr">
+              <span class="prayer-icon">🌤️</span>
+              <span class="prayer-check-copy">
+                <strong>আসর</strong>
+                <small id="home-time-asr">সময় হিসাব হবে</small>
+              </span>
+              <input id="check-asr" type="checkbox" data-prayer="asr">
+            </label>
+
+            <label class="prayer-check-row" for="check-maghrib">
+              <span class="prayer-icon">🌇</span>
+              <span class="prayer-check-copy">
+                <strong>মাগরিব</strong>
+                <small id="home-time-maghrib">সময় হিসাব হবে</small>
+              </span>
+              <input id="check-maghrib" type="checkbox" data-prayer="maghrib">
+            </label>
+
+            <label class="prayer-check-row" for="check-isha">
+              <span class="prayer-icon">🌙</span>
+              <span class="prayer-check-copy">
+                <strong>এশা</strong>
+                <small id="home-time-isha">সময় হিসাব হবে</small>
+              </span>
+              <input id="check-isha" type="checkbox" data-prayer="isha">
+            </label>
+          </div>
+
+          <p id="prayerChecklistMessage" class="form-message" role="status"></p>
+        </section>
+
+        <!-- Quick actions -->
+        <section class="section-block">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">QUICK ACCESS</p>
+              <h2>দ্রুত ব্যবহার</h2>
+            </div>
+          </div>
+
+          <div class="quick-grid">
+            <button class="quick-card" data-nav="notebook" type="button">
+              <span class="quick-icon">📔</span>
+              <strong>ভালো কাজের নোট</strong>
+              <small>আজ কী ভালো করলে?</small>
+            </button>
+
+            <button class="quick-card" data-nav="ibadah" type="button">
+              <span class="quick-icon">📿</span>
+              <strong>তাসবিহ</strong>
+              <small>জিকির গণনা করো</small>
+            </button>
+
+            <button class="quick-card" data-nav="calendar" type="button">
+              <span class="quick-icon">🗓️</span>
+              <strong>হিজরি ক্যালেন্ডার</strong>
+              <small>তারিখ ও মাস দেখো</small>
+            </button>
+
+            <button class="quick-card" data-nav="world" type="button">
+              <span class="quick-icon">🌍</span>
+              <strong>বিশ্বঘড়ি</strong>
+              <small>বিভিন্ন শহরের সময়</small>
+            </button>
+          </div>
+        </section>
+
+        <!-- Developer credit -->
+        <footer class="app-footer">
+          <span aria-hidden="true">✦</span>
+          Crafted by <strong>Developer MASTERMIND</strong>
+          <span aria-hidden="true">✦</span>
+        </footer>
+      </section>
+
+      <!-- =========================
+           PRAYER TIMES
+      ========================== -->
+      <section id="view-prayer" class="app-view" hidden>
+        <div class="page-title">
+          <p class="eyebrow">SALAH SCHEDULE</p>
+          <h1>নামাজের সময়</h1>
+          <p class="muted-text">নিজের শহর অনুযায়ী সময় হিসাব করো।</p>
+        </div>
+
+        <article class="content-card">
+          <label for="prayerCitySelect">শহর নির্বাচন</label>
+          <select id="prayerCitySelect">
+            <option value="dhaka">ঢাকা, বাংলাদেশ</option>
+            <option value="chittagong">চট্টগ্রাম, বাংলাদেশ</option>
+            <option value="sylhet">সিলেট, বাংলাদেশ</option>
+            <option value="makkah">মক্কা, সৌদি আরব</option>
+            <option value="madinah">মদিনা, সৌদি আরব</option>
+            <option value="karachi">করাচি, পাকিস্তান</option>
+            <option value="jakarta">জাকার্তা, ইন্দোনেশিয়া</option>
+            <option value="kuala-lumpur">কুয়ালালামপুর, মালয়েশিয়া</option>
+            <option value="istanbul">ইস্তাম্বুল, তুরস্ক</option>
+            <option value="cairo">কায়রো, মিশর</option>
+            <option value="london">লন্ডন, যুক্তরাজ্য</option>
+            <option value="new-york">নিউইয়র্ক, যুক্তরাষ্ট্র</option>
+          </select>
+
+          <div class="settings-row">
+            <div>
+              <label for="calculationMethod">হিসাবের পদ্ধতি</label>
+              <select id="calculationMethod">
+                <option value="mwl">Muslim World League</option>
+                <option value="karachi">Karachi</option>
+                <option value="umm-al-qura">Umm al-Qura</option>
+                <option value="egypt">Egyptian General Authority</option>
+                <option value="singapore">Singapore / MUIS</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="asrMethod">আসরের হিসাব</label>
+              <select id="asrMethod">
+                <option value="hanafi">হানাফি</option>
+                <option value="standard">স্ট্যান্ডার্ড</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="prayerTimesList" class="prayer-times-list">
+            <p class="muted-text">সময়ের তালিকা এখানে দেখা যাবে।</p>
+          </div>
+
+          <p class="notice">
+            নামাজের সময় নির্ভরযোগ্য স্থানীয় মসজিদ বা ইসলামিক কর্তৃপক্ষের
+            সময়সূচির সঙ্গে মিলিয়ে নেবে। প্রাথমিক হিসাবকে চূড়ান্ত সময় ধরে নিও না।
+          </p>
+        </article>
+
+        <article class="content-card ramadan-card">
+          <p class="eyebrow">RAMADAN</p>
+          <h2>সেহরি ও ইফতার</h2>
+
+          <div class="ramadan-times">
+            <div>
+              <span>🌄 সেহরি শেষ</span>
+              <strong id="suhoorTime">--:--</strong>
+            </div>
+            <div>
+              <span>🌇 ইফতার</span>
+              <strong id="iftarTime">--:--</strong>
+            </div>
+          </div>
+
+          <p class="muted-text">
+            নির্বাচিত শহরের সূর্য ও ফজরের সময়ের ভিত্তিতে দেখানো হবে।
+          </p>
+        </article>
+      </section>
+
+      <!-- =========================
+           HIJRI CALENDAR
+      ========================== -->
+      <section id="view-calendar" class="app-view" hidden>
+        <div class="page-title">
+          <p class="eyebrow">ISLAMIC CALENDAR</p>
+          <h1>হিজরি ক্যালেন্ডার</h1>
+          <p class="muted-text">ইসলামিক মাস, তারিখ ও গুরুত্বপূর্ণ দিবস।</p>
+        </div>
+
+        <article class="content-card">
+          <div class="calendar-toolbar">
+            <button id="prevMonthBtn" class="icon-btn" type="button" aria-label="আগের মাস">←</button>
+            <h2 id="calendarMonth">হিজরি মাস</h2>
+            <button id="nextMonthBtn" class="icon-btn" type="button" aria-label="পরের মাস">→</button>
+          </div>
+
+          <div id="hijriCalendarGrid" class="calendar-grid">
+            <p class="muted-text">ক্যালেন্ডার এখানে দেখা যাবে।</p>
+          </div>
+
+          <p class="notice">
+            হিসাব-ভিত্তিক হিজরি তারিখ স্থানীয় চাঁদ দেখার তারিখের সঙ্গে
+            এক দিন ভিন্ন হতে পারে।
+          </p>
+        </article>
+
+        <article class="content-card">
+          <h2>গুরুত্বপূর্ণ ইসলামিক দিবস</h2>
+          <div id="islamicEventsList" class="events-list">
+            <p class="muted-text">ইসলামিক দিবসের তালিকা এখানে দেখা যাবে।</p>
+          </div>
+        </article>
+      </section>
+
+      <!-- =========================
+           DAILY GOOD DEEDS NOTEBOOK
+      ========================== -->
+      <section id="view-notebook" class="app-view" hidden>
+        <div class="page-title">
+          <p class="eyebrow">MY DAILY JOURNAL</p>
+          <h1>ভালো কাজের নোটবুক 📔</h1>
+          <p class="muted-text">
+            প্রতিদিনের ভালো কাজ, কৃতজ্ঞতা ও নিজের উন্নতির কথা লিখে রাখো।
+          </p>
+        </div>
+
+        <article class="content-card notebook-form-card">
+          <h2>আজকের ডায়েরি</h2>
+
+          <form id="dailyNoteForm">
+            <label for="noteDate">তারিখ</label>
+            <input id="noteDate" name="noteDate" type="date" required>
+
+            <label for="noteTitle">নোটের শিরোনাম</label>
+            <input
+              id="noteTitle"
+              name="noteTitle"
+              type="text"
+              maxlength="100"
+              placeholder="যেমন: আজ একজনকে সাহায্য করেছি"
+              required
+            >
+
+            <label for="noteContent">আজকের ভালো কাজ ও ভাবনা</label>
+            <textarea
+              id="noteContent"
+              name="noteContent"
+              rows="6"
+              maxlength="5000"
+              placeholder="আজ কী ভালো কাজ করেছ? কী শিখেছ? কোন বিষয়ে কৃতজ্ঞ?"
+              required
+            ></textarea>
+
+            <div class="form-bottom-row">
+              <span id="noteCharCount" class="muted-text">০ / ৫০০০</span>
+              <button id="saveNoteBtn" class="btn btn-primary" type="submit">
+                নোট সংরক্ষণ করো
+              </button>
+            </div>
+
+            <p id="noteMessage" class="form-message" role="status"></p>
+          </form>
+        </article>
+
+        <section class="section-block">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">YOUR MEMORIES</p>
+              <h2>আগের নোটগুলো</h2>
+            </div>
+          </div>
+
+          <label for="noteSearch">নোট খোঁজো</label>
+          <input
+            id="noteSearch"
+            type="search"
+            placeholder="শিরোনাম বা লেখার মধ্যে খোঁজো..."
+          >
+
+          <div id="savedNotesList" class="saved-notes-list">
+            <div class="empty-state">
+              <span aria-hidden="true">📔</span>
+              <h3>তোমার নোটবুক এখানে থাকবে</h3>
+              <p>প্রথম নোট লিখলে সেটি এখানে দেখা যাবে।</p>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- =========================
+           IBADAH / TASBIH / DUAS
+      ========================== -->
+      <section id="view-ibadah" class="app-view" hidden>
+        <div class="page-title">
+          <p class="eyebrow">DAILY IBADAH</p>
+          <h1>ইবাদতের সঙ্গী</h1>
+          <p class="muted-text">জিকির, তাসবিহ ও দৈনিক দোয়া।</p>
+        </div>
+
+        <article class="content-card tasbih-card">
+          <p class="eyebrow">DIGITAL TASBIH</p>
+          <h2>তাসবিহ কাউন্টার</h2>
+          <p id="tasbihPhrase" class="tasbih-phrase">سُبْحَانَ اللَّهِ</p>
+          <p class="muted-text">সুবহানাল্লাহ</p>
+
+          <div id="tasbihCount" class="tasbih-count" aria-live="polite">০</div>
+          <p><span id="tasbihTarget">৩৩</span> বার লক্ষ্য</p>
+
+          <div class="tasbih-actions">
+            <button id="tasbihMinusBtn" class="btn btn-secondary" type="button">− ১</button>
+            <button id="tasbihPlusBtn" class="btn btn-primary tasbih-plus" type="button">+ জিকির</button>
+            <button id="tasbihResetBtn" class="btn btn-secondary" type="button">রিসেট</button>
+          </div>
+
+          <label for="tasbihTargetSelect">লক্ষ্য নির্বাচন</label>
+          <select id="tasbihTargetSelect">
+            <option value="33">৩৩ বার</option>
+            <option value="99">৯৯ বার</option>
+            <option value="100">১০০ বার</option>
+            <option value="custom">নিজের লক্ষ্য</option>
+          </select>
+
+          <input
+            id="customTasbihTarget"
+            type="number"
+            min="1"
+            max="100000"
+            placeholder="নিজের লক্ষ্য লিখো"
+            hidden
+          />
+        </article>
+
+        <section class="section-block">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">DAILY DUAS</p>
+              <h2>দৈনিক দোয়া</h2>
+            </div>
+          </div>
+
+          <article class="content-card dua-card">
+            <p class="dua-category">জ্ঞান বৃদ্ধির দোয়া</p>
+            <p class="arabic-text" lang="ar" dir="rtl">رَبِّ زِدْنِي عِلْمًا</p>
+            <p><strong>উচ্চারণ:</strong> রব্বি যিদনী ইলমা।</p>
+            <p><strong>অর্থ:</strong> হে আমার রব, আমার জ্ঞান বৃদ্ধি করুন।</p>
+            <small>সূরা ত্ব-হা, ২০:১১৪</small>
+          </article>
+
+          <article class="content-card dua-card">
+            <p class="dua-category">কৃতজ্ঞতার জিকির</p>
+            <p class="arabic-text" lang="ar" dir="rtl">الْحَمْدُ لِلَّهِ</p>
+            <p><strong>উচ্চারণ:</strong> আলহামদুলিল্লাহ।</p>
+            <p><strong>অর্থ:</strong> সমস্ত প্রশংসা আল্লাহর জন্য।</p>
+          </article>
+
+          <article class="content-card dua-card">
+            <p class="dua-category">ক্ষমা প্রার্থনা</p>
+            <p class="arabic-text" lang="ar" dir="rtl">أَسْتَغْفِرُ اللَّهَ</p>
+            <p><strong>উচ্চারণ:</strong> আস্তাগফিরুল্লাহ।</p>
+            <p><strong>অর্থ:</strong> আমি আল্লাহর কাছে ক্ষমা প্রার্থনা করছি।</p>
+          </article>
+
+          <p class="notice">
+            পরে যাচাইকৃত সূত্রসহ আরও দোয়া ও অফলাইন কুরআন টেক্সট যোগ করা হবে।
+          </p>
+        </section>
+      </section>
+
+      <!-- =========================
+           WORLD CLOCK
+      ========================== -->
+      <section id="view-world" class="app-view" hidden>
+        <div class="page-title">
+          <p class="eyebrow">WORLD TIME</p>
+          <h1>বিশ্বঘড়ি 🌍</h1>
+          <p class="muted-text">বিভিন্ন দেশের নির্বাচিত শহরের স্থানীয় সময়।</p>
+        </div>
+
+        <article class="content-card">
+          <label for="worldCitySelect">একটি শহর যোগ করো</label>
+          <select id="worldCitySelect">
+            <option value="Asia/Dhaka">ঢাকা, বাংলাদেশ</option>
+            <option value="Asia/Riyadh">মক্কা / মদিনা, সৌদি আরব</option>
+            <option value="Europe/London">লন্ডন, যুক্তরাজ্য</option>
+            <option value="America/New_York">নিউইয়র্ক, যুক্তরাষ্ট্র</option>
+            <option value="Asia/Karachi">করাচি, পাকিস্তান</option>
+            <option value="Asia/Jakarta">জাকার্তা, ইন্দোনেশিয়া</option>
+            <option value="Asia/Kuala_Lumpur">কুয়ালালামপুর, মালয়েশিয়া</option>
+            <option value="Europe/Istanbul">ইস্তাম্বুল, তুরস্ক</option>
+            <option value="Africa/Cairo">কায়রো, মিশর</option>
+            <option value="Asia/Tokyo">টোকিও, জাপান</option>
+            <option value="Australia/Sydney">সিডনি, অস্ট্রেলিয়া</option>
+            <option value="America/Toronto">টরন্টো, কানাডা</option>
+          </select>
+
+          <button id="addWorldCityBtn" class="btn btn-secondary" type="button">
+            + শহর যোগ করো
+          </button>
+        </article>
+
+        <div id="worldClockList" class="world-clock-grid">
+          <article class="world-clock-card">
+            <p>ঢাকা</p>
+            <h2 data-timezone="Asia/Dhaka">--:--:--</h2>
+            <small data-timezone-date="Asia/Dhaka">তারিখ লোড হচ্ছে…</small>
+          </article>
+          <article class="world-clock-card">
+            <p>মক্কা</p>
+            <h2 data-timezone="Asia/Riyadh">--:--:--</h2>
+            <small data-timezone-date="Asia/Riyadh">তারিখ লোড হচ্ছে…</small>
+          </article>
+          <article class="world-clock-card">
+            <p>লন্ডন</p>
+            <h2 data-timezone="Europe/London">--:--:--</h2>
+            <small data-timezone-date="Europe/London">তারিখ লোড হচ্ছে…</small>
+          </article>
+        </div>
+      </section>
+
+      <!-- =========================
+           QIBLA
+      ========================== -->
+      <section id="view-qibla" class="app-view" hidden>
+        <div class="page-title">
+          <p class="eyebrow">FIND THE QIBLA</p>
+          <h1>কিবলা নির্দেশক 🧭</h1>
+          <p class="muted-text">মক্কা শরিফের কাবার দিক খুঁজে নাও।</p>
+        </div>
+
+        <article class="content-card qibla-card">
+          <div id="qiblaCompass" class="qibla-compass" aria-label="কিবলা কম্পাস">
+            <div class="compass-ring">
+              <span class="compass-north">N</span>
+              <span class="compass-east">E</span>
+              <span class="compass-south">S</span>
+              <span class="compass-west">W</span>
+              <div id="qiblaNeedle" class="qibla-needle">
+                <span>▲</span>
+              </div>
+              <div class="compass-center">☪</div>
+            </div>
+          </div>
+
+          <h2 id="qiblaDegrees">দিক নির্ধারণ করা হয়নি</h2>
+          <p id="qiblaStatus" class="muted-text">
+            সঠিক দিক নির্ণয়ের জন্য অবস্থান ও উপযুক্ত ডিভাইস সেন্সর প্রয়োজন।
+          </p>
+
+          <button id="findQiblaBtn" class="btn btn-primary" type="button">
+            কিবলার দিক নির্ণয় করো
+          </button>
+
+          <p class="notice">
+            কম্পাসের নির্ভুলতা ডিভাইসের সেন্সর, অবস্থান ও অনুমতির ওপর নির্ভর করে।
+            প্রয়োজনে নির্ভরযোগ্য কম্পাস দিয়ে দিক যাচাই করো।
+          </p>
+        </article>
+      </section>
+
+      <!-- =========================
+           SETTINGS
+      ========================== -->
+      <section id="view-settings" class="app-view" hidden>
+        <div class="page-title">
+          <p class="eyebrow">PERSONAL SETTINGS</p>
+          <h1>সেটিংস ⚙</h1>
+          <p class="muted-text">অ্যাপটি নিজের মতো সাজিয়ে নাও।</p>
+        </div>
+
+        <article class="content-card">
+          <h2>অ্যাপের পছন্দ</h2>
+
+          <label for="themeSelect">থিম</label>
+          <select id="themeSelect">
+            <option value="emerald">Emerald Green</option>
+            <option value="midnight">Midnight</option>
+            <option value="sand">Warm Sand</option>
+          </select>
+
+          <label for="timeFormatSelect">সময় দেখানোর ধরন</label>
+          <select id="timeFormatSelect">
+            <option value="24">২৪ ঘণ্টা</option>
+            <option value="12">১২ ঘণ্টা</option>
+          </select>
+
+          <label for="weekStartSelect">ক্যালেন্ডারে সপ্তাহের শুরু</label>
+          <select id="weekStartSelect">
+            <option value="saturday">শনিবার</option>
+            <option value="sunday">রবিবার</option>
+            <option value="monday">সোমবার</option>
+          </select>
+        </article>
+
+        <article class="content-card">
+          <h2>PIN ও গোপনীয়তা</h2>
+          <p class="muted-text">
+            অন্য কেউ ব্যবহার করার আগে অ্যাপ লক করে রাখতে পারো।
+          </p>
+
+          <button id="changePinBtn" class="btn btn-secondary" type="button">
+            PIN পরিবর্তন
+          </button>
+
+          <button id="lockFromSettingsBtn" class="btn btn-secondary" type="button">
+            এখনই অ্যাপ লক করো
+          </button>
+
+          <p class="notice">
+            এই ওয়েব অ্যাপের PIN সাধারণ গোপনীয়তার জন্য। এটি ডিভাইসের সব ফাইল
+            বা ব্রাউজারের লোকাল ডেটাকে এনক্রিপ্ট করে না। শেয়ার করা ডিভাইসে
+            সংবেদনশীল তথ্য রাখবে না।
+          </p>
+        </article>
+
+        <article class="content-card about-card">
+          <div class="brand-mark small-brand-mark" aria-hidden="true">☾</div>
+          <h2>Noor Islamic App</h2>
+          <p>একটি অফলাইন ইসলামিক জীবনযাপন সহায়ক প্রজেক্ট।</p>
+          <p class="developer-signature">Developer MASTERMIND</p>
+          <small>সবার জন্য, বিনামূল্যে।</small>
+
+          <button id="installAppBtn" class="btn btn-primary" type="button" hidden>
+            অ্যাপ ইনস্টল করো
+          </button>
+        </article>
+
+        <button id="resetAppBtn" class="btn btn-danger" type="button">
+          এই ডিভাইসের অ্যাপ ডেটা মুছে ফেলো
+        </button>
+      </section>
+
+    </main>
+
+    <footer class="global-footer">
+      <p>☾ Noor Islamic App</p>
+      <p>Designed by <strong>Developer MASTERMIND</strong></p>
+      <small>ইবাদতের ধারাবাহিকতায় প্রতিদিন এক ধাপ এগিয়ে চলো।</small>
+    </footer>
+
+  </div>
+
+  <!-- JavaScript functionality is added in the next file -->
+  <script src="app.js"></script>
+</body>
+</html>
