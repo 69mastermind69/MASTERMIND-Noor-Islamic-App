@@ -1,0 +1,251 @@
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="512"
+     height="512"
+     viewBox="0 0 512 512">
+
+  <title>Noor Islamic App — Developer MASTERMIND</title>
+  <desc>
+    An elegant emerald and royal gold Islamic app icon
+    with a crescent moon, stars and mosque silhouette.
+  </desc>
+
+  <defs>
+    <!-- Deep emerald background -->
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#062F29"/>
+      <stop offset="48%" stop-color="#075743"/>
+      <stop offset="100%" stop-color="#0D8060"/>
+    </linearGradient>
+
+    <!-- Luxurious gold -->
+    <linearGradient id="gold" x1="0" y1="0" x2="0.9" y2="1">
+      <stop offset="0%" stop-color="#FFF0B7"/>
+      <stop offset="28%" stop-color="#F4D78E"/>
+      <stop offset="65%" stop-color="#D7AA4F"/>
+      <stop offset="100%" stop-color="#B9802B"/>
+    </linearGradient>
+
+    <linearGradient id="goldLight" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFF5CD"/>
+      <stop offset="100%" stop-color="#E8BE68"/>
+    </linearGradient>
+
+    <!-- Soft emerald glow -->
+    <radialGradient id="glow">
+      <stop offset="0%" stop-color="#48B88A" stop-opacity=".25"/>
+      <stop offset="100%" stop-color="#48B88A" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Crescent cut-out -->
+    <mask id="crescentMask">
+      <rect width="512" height="512" fill="black"/>
+      <circle cx="287" cy="145" r="49" fill="white"/>
+      <circle cx="310" cy="124" r="43" fill="black"/>
+    </mask>
+
+    <!-- Soft shadow -->
+    <filter id="shadow"
+            x="-30%" y="-30%" width="160%" height="170%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+
+    <!-- Star shape -->
+    <path id="star"
+          d="M0 -12 L3.5 -3.5 L12 0
+             L3.5 3.5 L0 12
+             L-3.5 3.5 L-12 0
+             L-3.5 -3.5 Z"
+          fill="url(#goldLight)"/>
+  </defs>
+
+  <!-- Rounded app background -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- Atmospheric glow -->
+  <circle cx="256" cy="207" r="205" fill="url(#glow)"/>
+
+  <!-- Thin ornamental frame -->
+  <rect x="17" y="17" width="478" height="478" rx="99"
+        fill="none"
+        stroke="#EED08B"
+        stroke-opacity=".22"
+        stroke-width="1.5"/>
+
+  <rect x="27" y="27" width="458" height="458" rx="90"
+        fill="none"
+        stroke="#FFFFFF"
+        stroke-opacity=".055"
+        stroke-width="1"/>
+
+  <!-- Delicate celestial orbit -->
+  <circle cx="256" cy="218" r="151"
+          fill="none"
+          stroke="#F3D995"
+          stroke-opacity=".12"
+          stroke-width="1.4"
+          stroke-dasharray="2 12"/>
+
+  <!-- Tiny stars -->
+  <use href="#star" x="170" y="126" transform="translate(170 126) scale(.55) translate(-170 -126)"/>
+  <use href="#star" transform="translate(355 185) scale(.62)"/>
+  <use href="#star" transform="translate(155 224) scale(.38)"/>
+  <use href="#star" transform="translate(370 251) scale(.34)"/>
+
+  <circle cx="200" cy="178" r="3"
+          fill="#FFF1C2" opacity=".8"/>
+  <circle cx="348" cy="112" r="2.5"
+          fill="#FFF1C2" opacity=".85"/>
+  <circle cx="139" cy="183" r="2"
+          fill="#FFF1C2" opacity=".55"/>
+
+  <!-- Crescent moon shadow -->
+  <circle cx="287" cy="148" r="51"
+          fill="#031F1B" opacity=".3"
+          filter="url(#shadow)"/>
+
+  <!-- Main golden crescent -->
+  <circle cx="287" cy="145" r="49"
+          fill="url(#gold)"
+          mask="url(#crescentMask)"/>
+
+  <!-- Floating jewel star -->
+  <path d="M337 91
+           C340 104 345 109 358 112
+           C345 115 340 120 337 133
+           C334 120 329 115 316 112
+           C329 109 334 104 337 91Z"
+        fill="url(#goldLight)"/>
+
+  <circle cx="337" cy="112" r="3" fill="#FFF9DD"/>
+
+  <!-- Mosque soft shadow -->
+  <path d="M92 408
+           H420
+           V420
+           H92Z"
+        fill="#021D19" opacity=".22"
+        filter="url(#shadow)"/>
+
+  <!-- Left minaret -->
+  <g fill="url(#gold)">
+    <path d="M112 399 V310 H138 V399 Z"/>
+    <path d="M107 310 H143 V319 H107 Z"/>
+    <path d="M115 310
+             L125 288
+             L135 310 Z"/>
+    <path d="M119 288
+             V277
+             Q125 268 131 277
+             V288 Z"/>
+    <rect x="120" y="329" width="10" height="24"
+          rx="5" fill="#075743"/>
+    <rect x="120" y="365" width="10" height="19"
+          rx="5" fill="#075743"/>
+  </g>
+
+  <!-- Right minaret -->
+  <g fill="url(#gold)">
+    <path d="M374 399 V310 H400 V399 Z"/>
+    <path d="M369 310 H405 V319 H369 Z"/>
+    <path d="M377 310
+             L387 288
+             L397 310 Z"/>
+    <path d="M381 288
+             V277
+             Q387 268 393 277
+             V288 Z"/>
+    <rect x="382" y="329" width="10" height="24"
+          rx="5" fill="#075743"/>
+    <rect x="382" y="365" width="10" height="19"
+          rx="5" fill="#075743"/>
+  </g>
+
+  <!-- Main mosque silhouette -->
+  <path d="M151 399
+           V348
+           H181
+           V327
+           C181 293 210 271 256 250
+           C302 271 331 293 331 327
+           V348
+           H361
+           V399 Z"
+        fill="url(#gold)"/>
+
+  <!-- Dome highlight -->
+  <path d="M191 327
+           C196 295 224 276 256 261
+           C288 276 316 295 321 327"
+        fill="none"
+        stroke="#FFF0B7"
+        stroke-width="2"
+        stroke-opacity=".65"/>
+
+  <!-- Dome finial -->
+  <path d="M251 254
+           L256 238
+           L261 254 Z"
+        fill="url(#goldLight)"/>
+
+  <circle cx="256" cy="235" r="4" fill="url(#goldLight)"/>
+
+  <!-- Central arched entrance -->
+  <path d="M229 399
+           V366
+           A27 27 0 0 1 283 366
+           V399 Z"
+        fill="#07513F"/>
+
+  <path d="M236 399 V367
+           A20 20 0 0 1 276 367
+           V399"
+        fill="none"
+        stroke="#F4D88F"
+        stroke-opacity=".65"
+        stroke-width="1.5"/>
+
+  <!-- Windows -->
+  <path d="M196 348
+           V337
+           A9 9 0 0 1 214 337
+           V348 Z"
+        fill="#07513F"/>
+
+  <path d="M298 348
+           V337
+           A9 9 0 0 1 316 337
+           V348 Z"
+        fill="#07513F"/>
+
+  <!-- Mosque foundation -->
+  <path d="M140 399 H372 V410 H140 Z"
+        fill="url(#goldLight)"/>
+
+  <path d="M128 410 H384 V417 H128 Z"
+        fill="url(#gold)"/>
+
+  <!-- Tiny ornamental lines -->
+  <path d="M199 431 H236"
+        stroke="#F3D995"
+        stroke-opacity=".5"
+        stroke-width="1.5"
+        stroke-linecap="round"/>
+
+  <path d="M276 431 H313"
+        stroke="#F3D995"
+        stroke-opacity=".5"
+        stroke-width="1.5"
+        stroke-linecap="round"/>
+
+  <circle cx="256" cy="431" r="3.5"
+          fill="url(#goldLight)"/>
+
+  <!-- Bottom signature detail -->
+  <path d="M208 451 Q256 464 304 451"
+        stroke="#F3D995"
+        stroke-opacity=".32"
+        stroke-width="1.5"
+        fill="none"/>
+
+</svg>
